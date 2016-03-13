@@ -1,0 +1,19 @@
+{
+  "name": "ml-mt7687-config",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "iamblue",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "browserify": "^13.0.0",
+    "fs-extra": "^0.26.5",
+    "read-installed": "^4.0.3",
+    "rimraf": "^2.5.2",
+    "uglify-js": "^2.6.2"
+  }
+}
