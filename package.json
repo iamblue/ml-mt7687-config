@@ -6,7 +6,9 @@
   "scripts": {
     "test": ""
   },
-  "author": "iamblue",
+  "author": {
+    "name": "iamblue"
+  },
   "license": "Apache2",
   "dependencies": {
     "bluebird": "^3.3.4",
@@ -17,5 +19,11 @@
     "read-installed": "^4.0.3",
     "rimraf": "^2.5.2",
     "uglify-js": "^2.6.2"
-  }
+  },
+  "readme": "# ml-mt7687-config\n",
+  "readmeFilename": "README.md",
+  "gitHead": "a2afd4aa9593ea5b7dadd6ad2599177b6e6e5382",
+  "_id": "ml-mt7687-config@0.0.7",
+  "_shasum": "0e3e910c4c2e0091823c28ef500ecedbc284c923",
+  "_from": "ml-mt7687-config@*"
 }
