@@ -11,6 +11,7 @@
   "dependencies": {
     "bluebird": "^3.3.4",
     "browserify": "^13.0.0",
+    "colors": "^1.1.2",
     "fs-extra": "^0.26.5",
     "ml-core-jerryscript": "0.0.1",
     "read-installed": "^4.0.3",
