@@ -8,7 +8,6 @@ var readInstalled = require("read-installed");
 var options = { dev: false, depth: 1 };
 var UglifyJS = require("uglify-js");
 var Promise = require('bluebird');
-var browserify = require('browserify');
 var SDK_link = '';
 
 module.exports = function(arg, generate, done) {
@@ -102,7 +101,6 @@ module.exports = function(arg, generate, done) {
   .then(function(content) {
 
     // generate Makefile
-
     generate
     .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
     .createFile('./Makefile', './tmp/Makefile', { APP_FILES: content }, done);
@@ -110,22 +108,14 @@ module.exports = function(arg, generate, done) {
     console.log("Generate Makefile success!");
   })
   .then(function(){
-    var browserify = require('browserify');
-    var b = browserify();
-    b.add(process.env.PWD + '/index.js');
-    return new Promise(function (resolve, reject) {
-      b.bundle(function(err, buffer) {
-        if (err) {
-          reject(err);
-        }
-        resolve(buffer.toString());
-      });
-    });
+    return readFile(process.env.PWD + '/_output.js')
   })
   .then(function(code){
-    var result = UglifyJS.minify(code, {fromString: true});
+    code = code.toString()
+    var result = UglifyJS.minify(code, { fromString: true, mangle: false });
     // console.log(result.code);
     var c = "global = {};" + result.code;
+    // var c = result.code;
     var obj = {}; obj.c = c;
     var codeStr = '';
     codeStr += JSON.stringify(obj).replace(/^\{\"c\"\:/, '').replace(/\}$/, '');

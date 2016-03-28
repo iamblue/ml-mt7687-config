@@ -12,6 +12,7 @@
     "bluebird": "^3.3.4",
     "browserify": "^13.0.0",
     "fs-extra": "^0.26.5",
+    "ml-core-jerryscript": "0.0.1",
     "read-installed": "^4.0.3",
     "rimraf": "^2.5.2",
     "uglify-js": "^2.6.2"
