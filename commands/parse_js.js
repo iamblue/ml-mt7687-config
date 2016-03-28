@@ -36,7 +36,8 @@ module.exports = function(arg, generate, done) {
           error = 1;
           var moduleName = '';
           if (/ReferenceError\:\s(\w+)\sis not defined/.test(data)){
-            moduleName = data.replace('ReferenceError: ', '').split(' is not defined')[0];
+            var parserStr = data.match(/ReferenceError\:\s(\w+)\sis not defined/gi)[0];
+            moduleName = parserStr.replace('ReferenceError: ', '').split(' is not defined')[0];
             // return new Promise(function (resolve, reject) {
               fs.readFileAsync(process.env.PWD + '/testError.js')
               .then(function(data) {
