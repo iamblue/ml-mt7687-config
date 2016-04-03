@@ -61,7 +61,7 @@ module.exports = function(arg, generate, done) {
     return new Promise(function (resolve, reject) {
       var copyCmd = 'rm -rf ./tools/gcc/gcc-arm-none-eabi/ && mkdir ./tools/gcc/gcc-arm-none-eabi/ && mv ./gcc-arm-none-eabi-4_8-2014q3/* ./tools/gcc/gcc-arm-none-eabi/';
       if (process.platform === 'win32') {
-        copyCmd = 'rm -rf ./tools/gcc/gcc-arm-none-eabi/ && mkdir ./tools/gcc/gcc-arm-none-eabi/ && mv ./gcc-arm-none-eabi/* ./tools/gcc/gcc-arm-none-eabi/'
+        copyCmd = 'rm -rf ./tools/gcc/gcc-arm-none-eabi/ && mkdir ./tools/gcc/gcc-arm-none-eabi/ && cp -R ./gcc-arm-none-eabi/ ./tools/gcc/'
       }
       var copy = child.exec(copyCmd, { cwd: sdkPath });
       copy.stdout.on('data', function(data) {

@@ -10,6 +10,7 @@ module.exports = function(arg, generate, done) {
   package.dependencies['ml-event'] = "*";
   package.dependencies['ml-timer'] = "*";
   package.dependencies['ml-pinmux'] = "*";
+  package.dependencies['ml-wifi'] = "*";
   package.SDKpath = "./sdk";
   package.scripts.build = "ml parse:js && ml build:js && ml build:init && ml build:bin && ml burn ./out/mt7687_iot_sdk_xip.bin";
   package.scripts.installEnv = "ml install:sdk && ml install:gcc && ml install:jerry && ml install:ml";

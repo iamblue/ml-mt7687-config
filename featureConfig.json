@@ -23,5 +23,6 @@
   "MTK_MINISUPP_ENABLE": true,
   "HALEX": false,
   "ml-timer": true,
-  "ml-pinmux": true
+  "ml-pinmux": true,
+  "ml-wifi": true
 }
