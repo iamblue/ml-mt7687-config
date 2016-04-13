@@ -76,8 +76,8 @@ CFLAGS += -DMTK_FW_VERSION=\"$(MTK_FW_VERSION)\"
 CFLAGS += -I$(SOURCE_DIR)/$(APP_PATH)/inc
 CFLAGS += -I$(OUTPATH)/obj/driver/chip/mt7687/inc
 # CFLAGS += -I$(OUTPATH)/obj/driver/chip/inc
-# CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/lwip/src/include
-# CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/lwip/ports/include
+CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/lwip/src/include
+CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/lwip/ports/include
 
 ###################################################
 # jerryscript

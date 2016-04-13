@@ -113,7 +113,7 @@ module.exports = function(arg, generate, done) {
   })
   .then(function(code){
     code = code.toString();
-    code = strip(code);
+    code = strip(code).replace(/(\s\s)+/g, '');
     // var result = UglifyJS.minify(code, { fromString: true, mangle: false });
     // console.log(result.code);
     var c = "global = {};" + code;

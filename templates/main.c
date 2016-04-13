@@ -14,7 +14,6 @@ void js_init() {
   jerry_init (JERRY_FLAG_EMPTY);
   jerry_api_value_t eval_ret;
 
-
   /* <%= ML_INIT %> */
 
   jerry_api_eval (script, strlen (script), false, false, &eval_ret);
