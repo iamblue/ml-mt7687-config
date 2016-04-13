@@ -17,9 +17,9 @@ module.exports = function(arg, generate, done) {
     return new Promise(function (resolve, reject) {
       var unzip;
       if (process.platform === 'win32') {
-        unzip = child.exec('tar -xvpf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar.gz');
+        unzip = child.exec('tar -xvpf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar');
       } else {
-        unzip = child.exec('sudo tar -xvpf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar.gz');
+        unzip = child.exec('sudo tar -xvpf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar');
       }
 
       unzip.stderr.on('data', function(data) {
