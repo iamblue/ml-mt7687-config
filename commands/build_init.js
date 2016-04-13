@@ -9,6 +9,7 @@ var options = { dev: false, depth: 1 };
 var UglifyJS = require("uglify-js");
 var Promise = require('bluebird');
 var SDK_link = '';
+var strip = require('strip-comments');
 
 module.exports = function(arg, generate, done) {
 
@@ -111,10 +112,11 @@ module.exports = function(arg, generate, done) {
     return readFile(process.env.PWD + '/_output.js')
   })
   .then(function(code){
-    code = code.toString()
-    var result = UglifyJS.minify(code, { fromString: true, mangle: false });
+    code = code.toString();
+    code = strip(code);
+    // var result = UglifyJS.minify(code, { fromString: true, mangle: false });
     // console.log(result.code);
-    var c = "global = {};" + result.code;
+    var c = "global = {};" + code;
     // var c = result.code;
     var obj = {}; obj.c = c;
     var codeStr = '';

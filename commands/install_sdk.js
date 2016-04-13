@@ -1,5 +1,49 @@
 var child = require('child_process');
+var Promise = require('bluebird');
 
 module.exports = function(arg, generate, done) {
-  child.exec('unzip ./LinkIt_SDK_V3.0.0.zip && tar -xvf ./LinkIt_SDK_V3.0.0.tar.gz', {cwd : process.env.PWD + '/sdk'});
+  var package = require(process.env.PWD + '/package.json');
+
+  var SDKversion = package.SDKversion;
+  return new Promise(function (resolve, reject) {
+    var download = child.exec('wget https://s3-ap-southeast-1.amazonaws.com/mtk.linkit/linkit_rtos_basic_sdk_' + SDKversion + '.tar');
+    download.stderr.on('data', function(data) {
+      console.log(data);
+    });
+    download.on('exit', function() {
+      resolve();
+    });
+  }).then(function() {
+    return new Promise(function (resolve, reject) {
+      var unzip;
+      if (process.platform === 'win32') {
+        unzip = child.exec('tar -xvpf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar.gz');
+      } else {
+        unzip = child.exec('sudo tar -xvpf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar.gz');
+      }
+
+      unzip.stderr.on('data', function(data) {
+        console.log(data);
+      });
+      unzip.on('exit', function() {
+        resolve();
+      });
+    });
+  }).then(function() {
+    return new Promise(function (resolve, reject) {
+      var deleteFile = child.exec('rm -rf ./linkit_rtos_basic_sdk_' + SDKversion + '.tar');
+      deleteFile.stderr.on('data', function(data) {
+        console.log(data);
+      });
+      deleteFile.on('exit', function() {
+        resolve();
+      });
+    });
+  }).then(function() {
+    console.log('==============================================================');
+    console.log('Success!'.green + ' Install SDK completely. ');
+    console.log('==============================================================');
+  }).catch(function(err) {
+    console.log(err);
+  })
 }

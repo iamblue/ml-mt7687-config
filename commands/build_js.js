@@ -3,7 +3,7 @@ var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
 var child = require('child_process');
 var rimraf = require('rimraf');
-
+var strip = require('strip-comments');
 module.exports = function(arg, generate, done) {
   var content = "var require = function (name) {\n" +
     "return global[name](this);\n"+
@@ -47,11 +47,13 @@ module.exports = function(arg, generate, done) {
   })
   .then(function(data) {
     var code = data.toString();
-    var result = UglifyJS.minify(code, { fromString: true, mangle: true });
+    // var result = UglifyJS.minify(code, { fromString: true, mangle: false });
+    code = strip(code).replace(/\n/g, '').replace(/(\s\s)+/g, '');
+
     content = content +
       "var EventEmitter = require('ml-event').EventEmitter;\n" +
       "var eventStatus = new EventEmitter();\n" +
-      "global.eventStatus = eventStatus;\n" + result.code;
+      "global.eventStatus = eventStatus;\n" + code;
     return content;
   })
   .then(function(content) {

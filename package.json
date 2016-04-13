@@ -18,6 +18,7 @@
     "ml-core-jerryscript": "0.0.1",
     "read-installed": "^4.0.3",
     "rimraf": "^2.5.2",
+    "strip-comments": "^0.4.4",
     "uglify-js": "^2.6.2"
   },
   "readme": "# ml-mt7687-config\n",

@@ -82,12 +82,6 @@ module.exports = function(arg, generate, done) {
       child.exec('rm -rf ./gcc-arm-none-eabi.tar.bz2 && rm -rf ./gcc-arm-none-eabi-4_8-2014q3/ && rm -rf ./gcc-arm-none-eabi/', { cwd: sdkPath });
     }
     return true;
-  })
-  .then(function() {
-
-    generate
-    .create(path.join(__dirname, '../templates'), sdkPath)
-    .createFile('./chip.mk', '/config/chip/mt7687/chip.mk', {}, done);
 
     console.log('==============================================================');
     console.log('Success!'.green + ' Install gcc completely. ');
