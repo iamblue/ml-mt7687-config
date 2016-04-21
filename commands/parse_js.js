@@ -4,6 +4,10 @@ var fs = Promise.promisifyAll(require("fs"));
 var child = require('child_process');
 
 module.exports = function(arg, generate, done) {
+  setTimeout(function() {
+    return process.exit();
+  }, 5000);
+
   fs.readFileAsync(process.env.PWD + '/index.js')
   .then(function(data) {
     var content = "function data() { \n " +
