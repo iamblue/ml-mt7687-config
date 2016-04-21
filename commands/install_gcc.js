@@ -94,7 +94,11 @@ module.exports = function(arg, generate, done) {
     .create(path.join(__dirname, '../templates'), sdkPath)
     .createFile('./FreeRTOSConfig.h', '/project/mt7687_hdk/apps/iot_sdk/inc/FreeRTOSConfig.h', {}, done);
   })
-
+  .then(function() {
+    generate
+    .create(path.join(__dirname, '../templates'), sdkPath)
+    .createFile('./libnvram.a', '/middleware/MTK/nvram/lib/libnvram.a', {}, done);
+  })
   .then(function() {
     return new Promise(function (resolve, reject) {
       var copy = child.exec('cp ' + path.join(__dirname, '../templates') + '/v' + SDKversion + '_out.zip ' + sdkPath);
