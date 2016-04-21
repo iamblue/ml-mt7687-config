@@ -1,5 +1,6 @@
 #include "jerry.h"
 
+extern int fota_mode ;
 #define __UNSED__ __attribute__((unused))
 #define DELCARE_HANDLER(NAME) \
 static bool \

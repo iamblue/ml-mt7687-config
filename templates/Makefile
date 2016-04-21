@@ -74,8 +74,8 @@ CFLAGS += -DMTK_FW_VERSION=\"$(MTK_FW_VERSION)\"
 ###################################################
 # include path
 CFLAGS += -I$(SOURCE_DIR)/$(APP_PATH)/inc
-CFLAGS += -I$(OUTPATH)/obj/driver/chip/mt7687/inc
-# CFLAGS += -I$(OUTPATH)/obj/driver/chip/inc
+CFLAGS += -I$(SOURCE_DIR)/driver/chip/mt7687/inc
+CFLAGS += -I$(SOURCE_DIR)/driver/chip/inc
 CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/lwip/src/include
 CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/lwip/ports/include
 
@@ -101,7 +101,7 @@ CFLAGS += -I$(SOURCE_DIR)/middleware/jerryscript/inc/lit
 
 ###################################################
 # LD Flags
-LDFLAGS = $(ALLFLAGS) $(FPUFLAGS) --specs=nano.specs -lnosys -nostartfiles -u _printf_float -u _scanf_float
+LDFLAGS = $(ALLFLAGS) $(FPUFLAGS) --specs=nano.specs -lnosys -nostartfiles -u _printf_float -u _scanf_float 
 ifeq ($(RAM_BOOTING), 1)
 LDFLAGS += -Wl,-Tmt7687_sram.ld -Wl,--gc-sections
 else
@@ -112,31 +112,27 @@ LDFLAGS += -Wl,-wrap=printf
 
 ###################################################
 # Libraries
-# ifeq ($(MTK_HOMEKIT_ENABLE),y)
-# LIBS += $(SOURCE_DIR)/middleware/MTK/homekit/lib/libhomekit.a
-# LIBS += $(OUTPATH)/lib/libjsonc.a
-# LIBS += $(OUTPATH)/lib/libed25519.a
-# LIBS += $(OUTPATH)/lib/libchacha20poly1305.a
-# LIBS += $(OUTPATH)/lib/libcurve25519.a
-# LIBS += $(OUTPATH)/lib/libsrp.a
-# endif
+ifeq ($(MTK_HOMEKIT_ENABLE),y)
+LIBS += $(SOURCE_DIR)/middleware/MTK/homekit/lib/libhomekit.a
+LIBS += $(OUTPATH)/lib/libjsonc.a
+LIBS += $(OUTPATH)/lib/libed25519.a
+LIBS += $(OUTPATH)/lib/libchacha20poly1305.a
+LIBS += $(OUTPATH)/lib/libcurve25519.a
+LIBS += $(OUTPATH)/lib/libsrp.a
+endif
 LIBS += $(OUTPATH)/lib/libcjson.a
 LIBS += $(OUTPATH)/lib/libhttpclient.a
 LIBS += $(OUTPATH)/lib/libmbedtls.a
-# LIBS += $(SOURCE_DIR)/middleware/MTK/minicli/lib/libminicli.a
-LIBS += $(OUTPATH)/lib/libminicli.a
+LIBS += $(SOURCE_DIR)/middleware/MTK/minicli/lib/libminicli.a
 ifeq ($(MTK_WIFI_WPS_ENABLE),y)
-# LIBS += $(SOURCE_DIR)/middleware/MTK/minisupp/lib/libminisupp_wps.a
-LIBS += $(OUTPATH)/lib/libminisupp_wps.a
+LIBS += $(SOURCE_DIR)/middleware/MTK/minisupp/lib/libminisupp_wps.a
 else
-# LIBS += $(SOURCE_DIR)/middleware/MTK/minisupp/lib/libminisupp.a
-LIBS += $(OUTPATH)/lib/libminisupp.a
+LIBS += $(SOURCE_DIR)/middleware/MTK/minisupp/lib/libminisupp.a
 endif
 LIBS += $(OUTPATH)/lib/libmqtt.a
 LIBS += $(OUTPATH)/lib/libnghttp2.a
 ifeq ($(MTK_NVRAM_ENABLE),y)
-LIBS += $(OUTPATH)/lib/libnvram.a
-# LIBS += $(SOURCE_DIR)/middleware/MTK/nvram/lib/libnvram.a
+LIBS += $(SOURCE_DIR)/middleware/MTK/nvram/lib/libnvram.a
 endif
 LIBS += $(OUTPATH)/lib/libsntp.a
 LIBS += $(OUTPATH)/lib/libxml.a
@@ -146,8 +142,7 @@ LIBS += $(OUTPATH)/lib/libbspex.a
 LIBS += $(OUTPATH)/lib/libbsp.a
 LIBS += $(SOURCE_DIR)/driver/board/mt76x7_hdk/lib/libbsp_sec.a
 LIBS += $(OUTPATH)/lib/libsmtcn.a
-LIBS += $(OUTPATH)/lib/libsmtcn_core.a
-# LIBS += $(SOURCE_DIR)/middleware/MTK/smtcn/lib/libsmtcn_core.a
+LIBS += $(SOURCE_DIR)/middleware/MTK/smtcn/lib/libsmtcn_core.a
 LIBS += $(SOURCE_DIR)/kernel/service/lib/libservice_core.a
 LIBS += $(OUTPATH)/lib/libservice.a
 LIBS += $(OUTPATH)/lib/libping.a
@@ -184,8 +179,35 @@ all: libs proj
 MOD_EXTRA = BUILD_DIR=$(BUILD_DIR) OUTPATH=$(OUTPATH) PROJ_PATH=$(PROJ_PATH)
 
 libs:
-		@rm -rf $(OUTPATH)/$(PROJ_NAME)_xip.elf
-
+# 	make -C $(KRL_OS_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_TFTP_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_LWIP_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_CJSON_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_DHCPD_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_HTTPCLIENT_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_MBEDTLS_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_MQTT_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_NGHTTP2_PATH) $(MOD_EXTRA)
+# ifeq ($(MTK_NVRAM_ENABLE),y)
+# endif
+# 	make -C $(MID_SMTCN_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_SNTP_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_XML_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_BSPEXT_PATH) $(MOD_EXTRA)
+# 	make -C $(DRV_CHIP_PATH) $(MOD_EXTRA)
+# 	make -C $(KRL_SRV_PATH) $(MOD_EXTRA)
+# 	make -C $(DRV_BSP_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_PING_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_IPERF_PATH) $(MOD_EXTRA)
+# 	make -C $(MID_FOTA_PATH) $(MOD_EXTRA)
+# ifeq ($(MTK_HOMEKIT_ENABLE),y)
+# 	make -C $(MID_CURVE25519_PATH)  $(MOD_EXTRA)
+# 	make -C $(MID_JSONC_PATH)  $(MOD_EXTRA)
+# 	make -C $(MID_ED25519_PATH)  $(MOD_EXTRA)
+# 	make -C $(MID_CHACHA20POLY1305_PATH)  $(MOD_EXTRA)
+# 	make -C $(MID_SRP_PATH)  $(MOD_EXTRA)
+# endif
+	@rm -rf $(OUTPATH)/$(PROJ_NAME)_xip.elf
 
 proj: $(OUTPATH)/$(PROJ_NAME)_xip.elf
 

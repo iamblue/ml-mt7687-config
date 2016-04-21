@@ -7,6 +7,7 @@ var config = require('../config');
 module.exports = function(arg, generate, done) {
   var package = require(process.env.PWD + '/package.json');
   var sdkPath = package.SDKpath;
+  var SDKversion = package.SDKversion;
   if (/^\.\//.test(package.SDKpath)) {
     sdkPath = process.env.PWD + package.SDKpath.replace('.', '');
   }
@@ -82,7 +83,48 @@ module.exports = function(arg, generate, done) {
       child.exec('rm -rf ./gcc-arm-none-eabi.tar.bz2 && rm -rf ./gcc-arm-none-eabi-4_8-2014q3/ && rm -rf ./gcc-arm-none-eabi/', { cwd: sdkPath });
     }
     return true;
+  })
+  .then(function() {
+    generate
+    .create(path.join(__dirname, '../templates'), sdkPath)
+    .createFile('./chip.mk', '/config/chip/mt7687/chip.mk', {}, done);
+  })
+  .then(function() {
+    generate
+    .create(path.join(__dirname, '../templates'), sdkPath)
+    .createFile('./FreeRTOSConfig.h', '/project/mt7687_hdk/apps/iot_sdk/inc/FreeRTOSConfig.h', {}, done);
+  })
 
+  .then(function() {
+    return new Promise(function (resolve, reject) {
+      var copy = child.exec('cp ' + path.join(__dirname, '../templates') + '/v' + SDKversion + '_out.zip ' + sdkPath);
+      copy.stdout.on('data', function(data) {
+        console.log(data);
+      });
+      copy.stderr.on('data', function(data) {
+        console.log(data);
+      });
+      copy.on('exit', function() {
+        return resolve();
+      });
+    });
+  })
+  .then(function() {
+    return new Promise(function (resolve, reject) {
+
+      var unzip = child.exec('unzip -o ./v' + SDKversion + '_out.zip', { cwd: sdkPath });
+      unzip.stdout.on('data', function(data) {
+        console.log(data);
+      });
+      unzip.stderr.on('data', function(data) {
+        console.log(data);
+      });
+      unzip.on('exit', function() {
+        return resolve();
+      });
+    });
+  })
+  .then(function() {
     console.log('==============================================================');
     console.log('Success!'.green + ' Install gcc completely. ');
     console.log('==============================================================');

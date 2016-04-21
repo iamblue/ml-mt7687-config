@@ -1,6 +1,6 @@
 {
   "name": "ml-mt7687-config",
-  "version": "0.0.13",
+  "version": "3.0.0",
   "description": "The mt7687 config package for Microlattice.js",
   "main": "index.js",
   "scripts": {
@@ -20,11 +20,5 @@
     "rimraf": "^2.5.2",
     "strip-comments": "^0.4.4",
     "uglify-js": "^2.6.2"
-  },
-  "readme": "# ml-mt7687-config\n",
-  "readmeFilename": "README.md",
-  "gitHead": "a2afd4aa9593ea5b7dadd6ad2599177b6e6e5382",
-  "_id": "ml-mt7687-config@0.0.12",
-  "_shasum": "5a8514477b5d6ad2998e371bbce8edd10409ac47",
-  "_from": "ml-mt7687-config@*"
+  }
 }

@@ -11,6 +11,7 @@ module.exports = function(arg, generate, done) {
   package.dependencies['ml-timer'] = "*";
   package.dependencies['ml-pinmux'] = "*";
   package.dependencies['ml-wifi'] = "*";
+  package.dependencies['ml-mcs'] = "*";
   package.SDKpath = "./sdk";
   package.SDKversion = "3.0.0";
   package.scripts.build = "ml parse:js && ml build:js && ml build:init && ml build:bin && ml burn ./out/mt7687_iot_sdk_xip.bin";

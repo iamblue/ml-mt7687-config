@@ -24,5 +24,6 @@
   "HALEX": false,
   "ml-timer": true,
   "ml-pinmux": true,
-  "ml-wifi": true
+  "ml-wifi": true,
+  "ml-mcs": false
 }

@@ -7,6 +7,16 @@
 #include "jerry.h"
 #endif
 
+#ifdef ml-mcs
+#include "./ml/src/mcs.h"
+#endif
+
+void js_lib_init() {
+  /* <%= ML_INIT %> */
+}
+
+int fota_mode = 0;
+
 void js_init() {
   // remember to add `var global={};`
   char script [] = <%- JS_CODE %>;
@@ -14,7 +24,7 @@ void js_init() {
   jerry_init (JERRY_FLAG_EMPTY);
   jerry_api_value_t eval_ret;
 
-  /* <%= ML_INIT %> */
+  js_lib_init();
 
   jerry_api_eval (script, strlen (script), false, false, &eval_ret);
   jerry_api_release_value (&eval_ret);
@@ -22,6 +32,21 @@ void js_init() {
   vTaskDelete(NULL);
 }
 
+#ifdef ml-mcs
+void tcp_callback(char *rcv_buf) {
+}
+#endif
+
+void wifi_connect(void) {
+  char script [] = "global.eventStatus.emit('wifiConnect', true);";
+  jerry_api_value_t eval_ret;
+  jerry_api_eval (script, strlen (script), false, false, &eval_ret);
+  jerry_api_release_value (&eval_ret);
+  #ifdef ml-mcs
+  mcs_tcp_init(tcp_callback);
+  #endif
+  vTaskDelete(NULL);
+}
 
 /**
   * @brief  Main program
