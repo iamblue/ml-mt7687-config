@@ -15,7 +15,7 @@ module.exports = function(arg, generate, done) {
   package.SDKpath = "./sdk";
   package.SDKversion = "3.0.0";
   package.scripts.build = "ml parse:js && ml build:js && ml build:init && ml build:bin && ml burn ./out/mt7687_iot_sdk_xip.bin";
-  package.scripts.installEnv = "ml install:sdk && ml install:gcc && ml install:jerry && ml install:ml";
+  package.scripts.installEnv = "ml install:sdk && ml install:gcc && ml install:jerry && ml install:ml && ml install:resetSDK && ml install:cache";
   fs.writeFileAsync(process.env.PWD + '/package.json', JSON.stringify(package));
   return child.exec('cp ' + path.join(__dirname, '../featureConfig.json') + ' ' + process.env.PWD + '/featureConfig.json && mkdir sdk');
 }
