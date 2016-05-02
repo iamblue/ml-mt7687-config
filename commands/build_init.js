@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
-var fs = require('fs-extra');
+var fsExtra = require('fs-extra');
+var fs = require('fs');
 var readFile = Promise.promisify(require("fs").readFile);
 var mkdir = Promise.promisify(require("fs").mkdir);
 var rimraf = require('rimraf');
@@ -11,7 +12,23 @@ var Promise = require('bluebird');
 var SDK_link = '';
 var strip = require('strip-comments');
 
+var config = require('../config');
+
+var SDK_link = '';
+var project_link = '';
+var GCC_link = '';
+var SRC_link = '';
+
+
+
 module.exports = function(arg, generate, done) {
+
+  var package = require(process.env.PWD + '/package');
+  SDK_link = package.SDKpath;
+
+  project_link = SDK_link + config.project.PATH;
+  GCC_link = SDK_link + config.gcc.PATH;
+  SRC_link = SDK_link + config.src.PATH;
 
   var featureConfig = require(process.env.PWD + '/featureConfig');
   var dotCFilePool = [];
@@ -61,11 +78,14 @@ module.exports = function(arg, generate, done) {
   .then(function(content){
 
     // generate feature.mk
-
-    generate
-    .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
-    .createFile('./feature.mk', './tmp/feature.mk', { content: content }, done);
-    console.log("Generate feature.mk success!");
+    return new Promise(function (resolve, reject) {
+      return generate
+      .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
+      .createFile('./feature.mk', './tmp/feature.mk', { content: content }, function() {
+        console.log("Generate feature.mk success!");
+        return resolve();
+      });
+    });
   })
   .then(function() {
 
@@ -88,7 +108,7 @@ module.exports = function(arg, generate, done) {
             var realPath = data.dependencies[package].src[index].replace('.', '');
             dotCFilePool.push(realPath);
             // copy ./src to SDK
-            fs.copy(data.dependencies[package].realPath + '/src', SDK_link + '/project/' + featureConfig.BOARD_CONFIG + '/apps/iot_sdk/src/ml/src');
+            fsExtra.copy(data.dependencies[package].realPath + '/src', SDK_link + '/project/' + featureConfig.BOARD_CONFIG + '/apps/iot_sdk/src/ml/src');
             content += 'APP_FILES += $(APP_PATH_SRC)/ml' + realPath + '\n';
 
           } else {
@@ -102,11 +122,14 @@ module.exports = function(arg, generate, done) {
   .then(function(content) {
 
     // generate Makefile
-    generate
-    .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
-    .createFile('./Makefile', './tmp/Makefile', { APP_FILES: content }, done);
-
-    console.log("Generate Makefile success!");
+    return new Promise(function (resolve, reject) {
+      return generate
+      .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
+      .createFile('./Makefile', './tmp/Makefile', { APP_FILES: content }, function() {
+        console.log("Generate Makefile success!");
+        return resolve();
+      });
+    })
   })
   .then(function(){
     return readFile(process.env.PWD + '/_output.js')
@@ -131,11 +154,24 @@ module.exports = function(arg, generate, done) {
     }
 
     content += '/* ';
-    generate
-    .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
-    .createFile('./main.c', './tmp/main.c', { ML_INIT: content, JS_CODE: code }, done);
+    return new Promise(function (resolve, reject) {
+      return generate
+      .create(path.join(__dirname, '../templates'), path.join(process.cwd(), './'))
+      .createFile('./main.c', './tmp/main.c', { ML_INIT: content, JS_CODE: code }, function() {
+        console.log("Generate main.c success!");
+        return resolve();
+      });
+    });
+  })
+  .then(function() {
 
-    console.log("Generate main.c success!");
+    return new Promise(function (resolve, reject) {
+      fs.createReadStream(process.env.PWD + '/tmp/main.c').pipe(fs.createWriteStream(SRC_link + '/main.c'));
+      fs.createReadStream(process.env.PWD + '/tmp/Makefile').pipe(fs.createWriteStream(GCC_link + '/Makefile'));
+      fs.createReadStream(process.env.PWD + '/tmp/feature.mk').pipe(fs.createWriteStream(GCC_link + '/feature.mk'));
+
+      return resolve();
+    });
   })
   .catch(function(err) {
     return done({ message: err });

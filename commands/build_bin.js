@@ -12,6 +12,7 @@ var SRC_link = '';
 
 var colors = require('colors');
 var child = require('child_process');
+var spawn = child.spawn;
 
 module.exports = function(arg, generate, done) {
   var featureConfig = require(process.env.PWD + '/featureConfig');
@@ -28,18 +29,12 @@ module.exports = function(arg, generate, done) {
   })
   .then(function() {
     return new Promise(function (resolve, reject) {
-      fs.createReadStream(process.env.PWD + '/tmp/main.c').pipe(fs.createWriteStream(SRC_link + '/main.c'));
-      fs.createReadStream(process.env.PWD + '/tmp/Makefile').pipe(fs.createWriteStream(GCC_link + '/Makefile'));
-      fs.createReadStream(process.env.PWD + '/tmp/feature.mk').pipe(fs.createWriteStream(GCC_link + '/feature.mk'));
-      return resolve();
-    });
-  }).then(function() {
-    return new Promise(function (resolve, reject) {
-
       var linking = 0;
       var status = '';
       var errorMsg = '';
+
       var build = child.exec('./build.sh ' + featureConfig.BOARD_CONFIG + ' iot_sdk', {cwd: SDK_link});
+
       build.stdout.on('data', function (data) {
         console.log(data.toString());
 
@@ -67,6 +62,7 @@ module.exports = function(arg, generate, done) {
       build.stderr.on('data', function (data) {
         console.log(data.toString());
       });
+      // return resolve();
     })
   })
   .then(function() {

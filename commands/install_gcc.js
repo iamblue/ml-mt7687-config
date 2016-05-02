@@ -4,8 +4,6 @@ var fs = require('fs');
 var readFile = Promise.promisify(fs.readFile);
 var path = require('path');
 var config = require('../config');
-var fsExtra = require('fs-extra');
-var unzipFile = require('unzip');
 
 function copyFile(source, target, cb) {
   var cbCalled = false;
