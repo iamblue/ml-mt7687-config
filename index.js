@@ -23,6 +23,10 @@ module.exports = {
     source: require('./commands/install_gcc'),
     description: 'install gcc',
   },
+  'install:resetSDK' : {
+    source: require('./commands/install_resetsdk'),
+    description: 'install and reset sdk',
+  },
   'install:sdk' : {
     source: require('./commands/install_sdk'),
     description: 'install sdk',
@@ -34,5 +38,9 @@ module.exports = {
   'install:ml' : {
     source: require('./commands/install_ml'),
     description: 'install ml',
+  },
+  'install:cache' : {
+    source: require('./commands/install_cache'),
+    description: 'install cache',
   },
 }
