@@ -92,7 +92,8 @@ module.exports = function(arg, generate, done) {
       var unzipCmd = 'mkdir gcc-arm-none-eabi && tar -xvf ./gcc-arm-none-eabi.tar.bz2';
 
       if (process.platform === 'win32') {
-        unzipCmd = 'mkdir gcc-arm-none-eabi && unzip -o ./gcc-arm-none-eabi.zip -d ./gcc-arm-none-eabi';
+        return resolve();
+        // unzipCmd = 'mkdir gcc-arm-none-eabi && unzip -o ./gcc-arm-none-eabi.zip -d ./gcc-arm-none-eabi';
       }
 
       var unzip = child.exec(unzipCmd, { cwd: sdkPath });
@@ -113,7 +114,8 @@ module.exports = function(arg, generate, done) {
     return new Promise(function (resolve, reject) {
       var copyCmd = 'rm -rf ./tools/gcc/gcc-arm-none-eabi/ && mkdir ./tools/gcc/gcc-arm-none-eabi/ && mv ./gcc-arm-none-eabi-4_8-2014q3/* ./tools/gcc/gcc-arm-none-eabi/';
       if (process.platform === 'win32') {
-        copyCmd = 'rm -rf ./tools/gcc/gcc-arm-none-eabi/ && mkdir ./tools/gcc/gcc-arm-none-eabi/ && cp -R ./gcc-arm-none-eabi/ ./tools/gcc/'
+        return resolve();
+        // copyCmd = 'rm -rf ./tools/gcc/gcc-arm-none-eabi/ && mkdir ./tools/gcc/gcc-arm-none-eabi/ && cp -R ./gcc-arm-none-eabi/ ./tools/gcc/'
       }
       var copy = child.exec(copyCmd, { cwd: sdkPath });
       copy.stdout.on('data', function(data) {
@@ -129,7 +131,7 @@ module.exports = function(arg, generate, done) {
   })
   .then(function() {
     if (process.platform === 'win32') {
-      child.exec('rm -rf ./gcc-arm-none-eabi.zip && rm -rf ./gcc-arm-none-eabi/', { cwd: sdkPath });
+      // child.exec('rm -rf ./gcc-arm-none-eabi/', { cwd: sdkPath });
     } else {
       child.exec('rm -rf ./gcc-arm-none-eabi-4_8-2014q3/ && rm -rf ./gcc-arm-none-eabi/', { cwd: sdkPath });
     }
