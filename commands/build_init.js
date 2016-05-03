@@ -7,7 +7,6 @@ var rimraf = require('rimraf');
 var path = require('path');
 var readInstalled = require("read-installed");
 var options = { dev: false, depth: 1 };
-var UglifyJS = require("uglify-js");
 var Promise = require('bluebird');
 var SDK_link = '';
 var strip = require('strip-comments');
@@ -19,7 +18,7 @@ var project_link = '';
 var GCC_link = '';
 var SRC_link = '';
 
-
+var jsmin = require('jsmin').jsmin;
 
 module.exports = function(arg, generate, done) {
 
@@ -136,11 +135,11 @@ module.exports = function(arg, generate, done) {
   })
   .then(function(code){
     code = code.toString();
-    code = strip(code).replace(/(\s\s)+/g, '');
-    // var result = UglifyJS.minify(code, { fromString: true, mangle: false });
-    // console.log(result.code);
+    code = strip(code);
+    code = jsmin(code);
+
     var c = "global = {};" + code;
-    // var c = result.code;
+
     var obj = {}; obj.c = c;
     var codeStr = '';
     codeStr += JSON.stringify(obj).replace(/^\{\"c\"\:/, '').replace(/\}$/, '');
