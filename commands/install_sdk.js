@@ -2,7 +2,7 @@ var child = require('child_process');
 // var Promise = require('bluebird');
 
 module.exports = function(arg, generate, done) {
-  child.exec('unzip ./LinkIt_SDK_V3.0.0.zip && tar -xvf ./LinkIt_SDK_V3.0.0.tar.gz', {cwd : process.env.PWD + '/sdk'});
+  child.exec('sh ../node_modules/ml-mt7687-config/templates/tar_sdk.sh', {cwd : process.env.PWD + '/sdk'});
   // var package = require(process.env.PWD + '/package.json');
 
   // var SDKversion = package.SDKversion;
