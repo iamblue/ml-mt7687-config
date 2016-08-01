@@ -86,7 +86,7 @@ int main(void)
     cli_def_create();
     cli_task_create();
 #endif
-    xTaskCreate(js_init,"js_init", 10096, NULL, 2, NULL);
+    xTaskCreate(js_init,"js_init", 15096, NULL, 2, NULL);
 
     vTaskStartScheduler();
 
