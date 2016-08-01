@@ -98,7 +98,7 @@ module.exports = function(arg, generate, done) {
   .then(function(data) {
 
     var content = '';
-
+    console.log(data);
     for (package in data.dependencies) {
       if (data.dependencies[package].src && /^ml\-/.test(package) && package !== 'ml-cli') {
         for (var index in data.dependencies[package].src) {
@@ -107,7 +107,7 @@ module.exports = function(arg, generate, done) {
             var realPath = data.dependencies[package].src[index].replace('.', '');
             dotCFilePool.push(realPath);
             // copy ./src to SDK
-            fsExtra.copy(data.dependencies[package].realPath + '/src', SDK_link + '/project/' + featureConfig.BOARD_CONFIG + '/apps/iot_sdk/src/ml/src');
+            fsExtra.copy(data.dependencies[package].realPath + '/src', SDK_link + '/project/' + featureConfig.BOARD_CONFIG + '/apps/iot_sdk_demo/src/ml/src');
             content += 'APP_FILES += $(APP_PATH_SRC)/ml' + realPath + '\n';
 
           } else {
@@ -168,7 +168,7 @@ module.exports = function(arg, generate, done) {
       fs.createReadStream(process.env.PWD + '/tmp/main.c').pipe(fs.createWriteStream(SRC_link + '/main.c'));
       fs.createReadStream(process.env.PWD + '/tmp/Makefile').pipe(fs.createWriteStream(GCC_link + '/Makefile'));
       fs.createReadStream(process.env.PWD + '/tmp/feature.mk').pipe(fs.createWriteStream(GCC_link + '/feature.mk'));
-
+      fs.createReadStream(process.env.PWD + '/node_modules/ml-mt7687-config/templates/build_sdk.sh').pipe(fs.createWriteStream(SDK_link + '/build.sh'));
       return resolve();
     });
   })

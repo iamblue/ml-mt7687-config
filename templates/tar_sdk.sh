@@ -1,0 +1,1 @@
+tar -xvf ./LinkIt_SDK_V3.3.1_public.tar.gz
