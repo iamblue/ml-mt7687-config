@@ -156,6 +156,12 @@ CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/mqtt/MQTTClient-C/src/mediatek
 CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/mqtt/MQTTClient-C/src
 CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/mqtt/MQTTPacket/src
 endif
+ifeq ($(ml-mcs),y)
+CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/mqtt/MQTTClient-C/src/mediatek
+CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/mqtt/MQTTClient-C/src
+CFLAGS += -I$(SOURCE_DIR)/middleware/third_party/mqtt/MQTTPacket/src
+endif
+CFLAGS += -I$(SOURCE_DIR)/middleware/MTK/fota/inc/
 CFLAGS += -I$(SOURCE_DIR)/middleware/MTK/minisupp/src_protected/wpa_supplicant_8.jb4_1/wpa_supplicant
 CFLAGS += -I$(SOURCE_DIR)/driver/board/mt76x7_hdk/wifi/inc
 # CFLAGS += -I$(SOURCE_DIR)/driver/board/mt76x7_hdk/init/inc
@@ -219,6 +225,9 @@ LIBS += $(OUTPATH)/libhttpclient.a
 ifeq ($(ml-mqtt),y)
 LIBS += $(OUTPATH)/libmqtt.a
 endif
+ifeq ($(ml-mcs),y)
+LIBS += $(OUTPATH)/libmqtt.a
+endif
 LIBS += $(OUTPATH)/libmbedtls.a
 LIBS += $(OUTPATH)/libbspex.a
 LIBS += $(OUTPATH)/libminicli.a
@@ -237,6 +246,7 @@ LIBS += $(OUTPATH)/libping.a
 LIBS += $(OUTPATH)/liblwip.a
 LIBS += $(OUTPATH)/libhal.a
 LIBS += $(OUTPATH)/libdhcpd.a
+LIBS += $(OUTPATH)/libfota.a
 
 MODULE_PATH += $(KRL_OS_PATH)
 MODULE_PATH += $(MID_LWIP_PATH)
@@ -253,7 +263,12 @@ MODULE_PATH += $(KRL_SRV_PATH)
 MODULE_PATH += $(DRV_BSP_PATH)
 MODULE_PATH += $(MID_PING_PATH)
 MODULE_PATH += $(MID_IPERF_PATH)
+MODULE_PATH += $(MID_FOTA_PATH)
+
 ifeq ($(ml-mqtt),y)
+MODULE_PATH += $(MID_MQTT_PATH)
+endif
+ifeq ($(ml-mcs),y)
 MODULE_PATH += $(MID_MQTT_PATH)
 endif
 

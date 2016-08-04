@@ -101,9 +101,9 @@ extern uint32_t SystemCoreClock;
 #define configTOTAL_HEAP_SIZE           ( ( size_t ) ( 140 * 1024 ) )
 #else
 #if defined(MTK_WIFI_TGN_VERIFY_ENABLE)
-#define configTOTAL_HEAP_SIZE           ( ( size_t ) ( 110 * 1024 ) ) /* 2 iperf instances need 68KB to run on AP mode */
+#define configTOTAL_HEAP_SIZE           ( ( size_t ) ( 105 * 1024 ) ) /* 2 iperf instances need 68KB to run on AP mode */
 #else
-#define configTOTAL_HEAP_SIZE           ( ( size_t ) ( 110 * 1024 ) ) /* 2 iperf instances need 68KB to run on AP mode */
+#define configTOTAL_HEAP_SIZE           ( ( size_t ) ( 105 * 1024 ) ) /* 2 iperf instances need 68KB to run on AP mode */
 #endif
 #endif
 
