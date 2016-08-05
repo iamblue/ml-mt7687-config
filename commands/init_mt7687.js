@@ -11,9 +11,9 @@ module.exports = function(arg, generate, done) {
   package.dependencies['ml-timer'] = "*";
   package.dependencies['ml-pinmux'] = "*";
   package.dependencies['ml-wifi'] = "*";
-  package.dependencies['ml-mcs'] = "*";
+  // package.dependencies['ml-mcs'] = "*";
   package.SDKpath = "./sdk";
-  package.SDKversion = "3.0.0";
+  package.SDKversion = "3.3.1";
   package.scripts.build = "./build.sh";
   package.scripts.installEnv = "ml install:sdk && ml install:gcc && ml install:jerry && ml install:ml && ml install:resetSDK && ml install:cache";
   fs.writeFileAsync(process.env.PWD + '/package.json', JSON.stringify(package, null, '\t'));

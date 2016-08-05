@@ -33,7 +33,7 @@ module.exports = function(arg, generate, done) {
       var status = '';
       var errorMsg = '';
 
-      var build = child.exec('./build.sh ' + featureConfig.BOARD_CONFIG + ' iot_sdk', {cwd: SDK_link});
+      var build = child.exec('./build.sh ' + featureConfig.BOARD_CONFIG + ' iot_sdk_demo', {cwd: SDK_link});
 
       build.stdout.on('data', function (data) {
         console.log(data.toString());
@@ -74,7 +74,7 @@ module.exports = function(arg, generate, done) {
     });
   })
   .then(function() {
-    copy(SDK_link + '/out/' + featureConfig.BOARD_CONFIG + '/iot_sdk', process.env.PWD + '/out');
+    copy(SDK_link + '/out/' + featureConfig.BOARD_CONFIG + '/iot_sdk_demo', process.env.PWD + '/out');
 
     console.log('==============================================================');
     console.log('Success!'.green + ' Please see the ./out folder!');
