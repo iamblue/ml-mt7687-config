@@ -222,6 +222,9 @@ endif
 #
 ##############################################################################
 LIBS += $(OUTPATH)/libhttpclient.a
+ifeq ($(ml-http2),y)
+LIBS += $(OUTPATH)/libnghttp2.a
+endif
 ifeq ($(ml-mqtt),y)
 LIBS += $(OUTPATH)/libmqtt.a
 endif
@@ -264,6 +267,7 @@ MODULE_PATH += $(DRV_BSP_PATH)
 MODULE_PATH += $(MID_PING_PATH)
 MODULE_PATH += $(MID_IPERF_PATH)
 MODULE_PATH += $(MID_FOTA_PATH)
+MODULE_PATH += $(MID_NGHTTP2_PATH)
 
 ifeq ($(ml-mqtt),y)
 MODULE_PATH += $(MID_MQTT_PATH)
