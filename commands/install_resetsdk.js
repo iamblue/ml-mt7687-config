@@ -6,6 +6,7 @@ var fs = require('fs');
 
 module.exports = function(arg, generate, done) {
   var package = require(process.env.PWD + '/package.json');
+  var featureConfig = require(process.env.PWD + '/featureConfig.json');
   var sdkPath = package.SDKpath;
   var SDKversion = package.SDKversion;
   if (/^\.\//.test(package.SDKpath)) {
@@ -15,7 +16,9 @@ module.exports = function(arg, generate, done) {
   return new Promise(function (resolve, reject) {
     return generate
     .create(path.join(__dirname, '../templates'), sdkPath)
-    .createFile('./FreeRTOSConfig.h', '/project/mt7687_hdk/apps/iot_sdk_demo/inc/FreeRTOSConfig.h', {}, function() {
+    .createFile('./FreeRTOSConfig.h', '/project/mt7687_hdk/apps/iot_sdk_demo/inc/FreeRTOSConfig.h', {
+      TOTAL_HEAP_SIZE: featureConfig.TOTAL_HEAP_SIZE || 105,
+    }, function() {
       return resolve();
     });
   // }).then(function() {

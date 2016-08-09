@@ -1,6 +1,7 @@
 {
   "IC_CONFIG": "mt7687",
   "BOARD_CONFIG": "mt7687_hdk",
+  "TOTAL_HEAP_SIZE": 105,
   "MTK_FW_VERSION": "mt7687_fw",
   "MTK_HAL_LOWPOWER_ENABLE": true,
   "MTK_BSPEXT_ENABLE": true,
