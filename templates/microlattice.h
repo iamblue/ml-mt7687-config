@@ -1,6 +1,10 @@
 #include "jerry.h"
 
 extern int fota_mode ;
+extern char *script;
+extern void js_lib_init(char *);
+extern void js_init(char *);
+
 #define __UNSED__ __attribute__((unused))
 #define DELCARE_HANDLER(NAME) \
 static bool \

@@ -20,6 +20,8 @@ void js_lib_init() {
   /* <%= ML_INIT %> */
 }
 
+char script [] = <%- JS_CODE %>;
+
 /**
   * @brief  Main program
   * @param  None
@@ -29,8 +31,6 @@ int fota_mode = 0;
 
 void js_init() {
   // remember to add `var global={};`
-  char script [] = <%- JS_CODE %>;
-
   jerry_init (JERRY_FLAG_EMPTY);
   jerry_api_value_t eval_ret;
 
