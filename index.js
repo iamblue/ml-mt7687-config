@@ -19,6 +19,10 @@ module.exports = {
     source: require('./commands/build_bin'),
     description: 'build binary',
   },
+  'burn:xmodem': {
+    source: require('./commands/burn_xmodem'),
+    description: 'download code by xmodem',
+  },
   'install:gcc' : {
     source: require('./commands/install_gcc'),
     description: 'install gcc',
