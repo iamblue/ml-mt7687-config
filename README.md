@@ -12,12 +12,16 @@ update-core
 ```
 pacman -S tar unzip
 pacman -S make
+pacman -S git
+pacman -S wget
 ```
 
 #### Linux/Mac 開發者直接進行以下項目
 
 ## 步驟
 * 請先具備好 Node.js (0.10.32 ~ 4.2.2)環境
+  * mac/linux 用戶請用 [nvm](https://github.com/creationix/nvm) 安裝
+  * windows 用戶請至 [這裏下載4.X.X](https://nodejs.org/en/) 版本
 * npm install microlattice -g
 * 創建一個新的資料夾並進去: mkdir testSDK && cd testSDK
 * ml create
