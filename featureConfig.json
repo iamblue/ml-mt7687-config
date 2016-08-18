@@ -32,6 +32,5 @@
   "MTK_LWIP_ENABLE": true,
   "HALEX": false,
   "ml-timer": true,
-  "ml-pinmux": true,
-  "ml-mcs": false
+  "ml-pinmux": true
 }

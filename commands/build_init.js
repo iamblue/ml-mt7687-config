@@ -98,7 +98,6 @@ module.exports = function(arg, generate, done) {
   .then(function(data) {
 
     var content = '';
-    console.log(data);
     for (package in data.dependencies) {
       if (data.dependencies[package].src && /^ml\-/.test(package) && package !== 'ml-cli') {
         for (var index in data.dependencies[package].src) {
