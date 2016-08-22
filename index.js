@@ -11,6 +11,10 @@ module.exports = {
     source: require('./commands/parse_js'),
     description: 'parse all js lib',
   },
+  'build:js2c': {
+    source: require('./commands/build_js2c'),
+    description: 'build a c file from js',
+  },
   'build:js' : {
     source: require('./commands/build_js'),
     description: 'build a js file',

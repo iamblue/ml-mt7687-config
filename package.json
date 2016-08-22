@@ -16,7 +16,8 @@
     "colors": "^1.1.2",
     "fs-extra": "^0.26.5",
     "jsmin": "^1.0.1",
-    "ml-core-jerryscript": "0.0.1",
+    "ml-core-jerryscript": "0.0.2",
+    "ml-mt7687-jerryscript-project": "*",
     "read-installed": "^4.0.3",
     "rimraf": "^2.5.2",
     "strip-comments": "^0.4.4"

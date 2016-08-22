@@ -1,4 +1,4 @@
-ml build:js && ml build:init && rm -rf ./_output.js && rm -rf ./tmp
+ml build:js && ml build:init && ml build:js2c && rm -rf ./_output.js && rm -rf ./tmp
 
 cd sdk && ./build.sh mt7687_hdk iot_sdk_demo && cd .. &&
 

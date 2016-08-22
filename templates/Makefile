@@ -93,6 +93,7 @@ APP_FILES       = $(APP_PATH_SRC)/main.c     \
                   $(APP_PATH)/GCC/syscalls.c \
                   $(APP_PATH_SRC)/sys_init.c \
                   $(APP_PATH_SRC)/network_init.c \
+                  $(APP_PATH_SRC)/jerry_run.c \
 
 APP_FILES       += $(APP_PATH_SRC)/ept_gpio_var.c
 APP_FILES       += $(APP_PATH_SRC)/ept_eint_var.c
@@ -113,7 +114,6 @@ endif
 # =============================================
 
 <%= APP_FILES %>
-
 
 C_FILES         += $(APP_FILES) $(SYS_FILES)
 C_FILES += driver/board/mt76x7_hdk/ept/src/bsp_gpio_ept_config.c
@@ -175,7 +175,8 @@ CFLAGS += -I$(SOURCE_DIR)/driver/board/mt76x7_hdk/ept/inc
 
 ###################################################
 # jerryscript
-
+CFLAGS += -I$(SOURCE_DIR)/middleware/jerryscript/inc
+# CFLAGS +=-mfloat-abi=softfp
 CFLAGS += -I$(SOURCE_DIR)/middleware/jerryscript/inc/vm
 CFLAGS += -I$(SOURCE_DIR)/middleware/jerryscript/inc/parser
 CFLAGS += -I$(SOURCE_DIR)/middleware/jerryscript/inc/parser/regexp
@@ -213,7 +214,9 @@ endif
 
 ifeq ($(MTK_JR_ENABLE),y)
 # Jerryscript (Javascript Engine)
-LIBS += $(SOURCE_DIR)/middleware/jerryscript/lib/librelease-cp.jerry-core.a
+# LIBS += $(SOURCE_DIR)/middleware/jerryscript/lib/librelease-cp.jerry-core.a
+LIBS += $(SOURCE_DIR)/middleware/jerryscript/targets/RTOS/libjerry/libjerrycore.a
+LIBS += $(SOURCE_DIR)/middleware/jerryscript/targets/RTOS/libjerry/libjerrylibm.a
 endif
 
 ##############################################################################
