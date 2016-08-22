@@ -7,5 +7,6 @@ module.exports = function(arg, generate, done) {
   if (/^\.\//.test(package.SDKpath)) {
     sdkPath = process.env.PWD + package.SDKpath.replace('.', '');
   }
-  return child.exec('cp -R ' + path.join(__dirname, '../node_modules/ml-core-jerryscript/cm4/jerryscript') + ' ' + process.env.PWD + '/sdk/middleware/jerryscript && cp ' + path.join(__dirname, '../templates/jerry-port.c') + ' ' + process.env.PWD + '/sdk/project/mt7687_hdk/apps/iot_sdk_demo/src/jerry-port.c' );
+  child.exec('cp -R ' + path.join(__dirname, '../node_modules/ml-core-jerryscript/cm4/jerryscript') + ' ' + process.env.PWD + '/sdk/middleware/jerryscript');
+  return child.exec('cp -R ' + path.join(__dirname, '../node_modules/ml-mt7687-jerryscript-project/iot_sdk_demo') + ' ' + process.env.PWD + '/sdk/project/mt7687_hdk/apps/');
 }
