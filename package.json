@@ -1,6 +1,6 @@
 {
   "name": "ml-mt7687-config",
-  "version": "3.3.7",
+  "version": "3.3.8",
   "description": "The mt7687 config package for Microlattice.js",
   "main": "index.js",
   "scripts": {
